@@ -23,15 +23,11 @@ const CHARACTERS = [
     { name: "Натан Цукерман", img: "natan.jpg" },
     { name: "Хеллен Каспирл", img: "hellen.jpg" },
     { name: "Мик Шуден", img: "mick.jpg" },
-    { name: "Маккларен III", img: "makklaren.jpg" },
-    { name: "Антура Синсо", img: "antura.jpg" },
     { name: "Джино Борделли", img: "dzhino.jpg" },
     { name: "Санз", img: "sanz.jpg" },
     { name: "Нахан", img: "nahan.jpg" },
-    { name: "Михаэль Пант", img: "mihael.jpg" },
-    { name: "Лорна Бейт", img: "lorna.jpg" },
+    { name: "Таис Юльман", img: "thais.jpg" },
     { name: "Эджейн Афнан Неларн", img: "edzheyn.jpg" },
-    { name: "Мелах Кантинто", img: "melah.jpg" }
 ];
 
 function getRandomCharacter() {
