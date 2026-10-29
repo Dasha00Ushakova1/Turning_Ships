@@ -262,7 +262,38 @@ function saveHistory(c1, c2, result) {
         setTimeout(() => toast.hidden = true, 2000);
     }
 }
+                // ... (выше идет saveHistory)
+                saveHistory(char1.name, char2.name, resultText);
 
+                // ПРОВЕРКА НА ДЖЕКПОТ
+                const isKishiar = (name) => name.includes("Кишиар");
+                const isYuder = (name) => name.includes("Юдер");
+
+                if ((isKishiar(char1.name) && isYuder(char2.name)) || 
+                    (isYuder(char1.name) && isKishiar(char2.name))) {
+                    triggerJackpot();
+                }
+            }
+        }, 50);
+    });
+}
+
+// Функция включения Джекпота
+function triggerJackpot() {
+    const jackpotScreen = document.getElementById('jackpot-screen');
+    
+    // 1. Включаем мигание фона
+    document.body.classList.add('body-flash');
+    
+    // 2. Показываем надпись
+    jackpotScreen.hidden = false;
+
+    // 3. Убираем всё через 3 секунды
+    setTimeout(() => {
+        jackpotScreen.hidden = true;
+        document.body.classList.remove('body-flash');
+    }, 3000);
+}
 function initHistory() {
     const tbody = document.getElementById('history-body');
     const emptyEl = document.getElementById('history-empty');
