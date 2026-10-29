@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning — История</title>
+    <link rel="icon" href="./unnamed.png" type="image/jpeg">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="page page--history">
+
+    <div class="bg"></div>
+
+    <header class="history-header">
+        <a href="index.html" class="history-back" aria-label="Назад">←</a>
+        <h1 class="history-title">История генераций</h1>
+    </header>
+
+    <main class="history-main">
+        <div class="history-card">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Дата и время</th>
+                        <th>Персонаж 1</th>
+                        <th>Персонаж 2</th>
+                        <th>Результат</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body"></tbody>
+            </table>
+
+            <p id="history-empty" class="history-empty" hidden>
+                Пока ничего не сгенерировано.
+            </p>
+        </div>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./app.js"></script>
+</body>
+</html>
