@@ -257,7 +257,6 @@ function saveHistory(c1, c2, result) {
     
     const toast = document.getElementById('toast');
     if (toast) {
-        toast.textContent = 'Пара сохранена в историю!';
         toast.className = 'toast toast--success';
         toast.hidden = false;
         setTimeout(() => toast.hidden = true, 2000);
