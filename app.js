@@ -183,12 +183,15 @@ function initGenerator() {
     const card1 = document.getElementById('slot-1');
     const card2 = document.getElementById('slot-2');
 
-    spinBtn.addEventListener('click', () => {
-        // ВРЕМЕННО ДЛЯ ТЕСТА: принудительный выбор
-let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
-let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
-    }
+      spinBtn.addEventListener('click', () => {
+        // ВРЕМЕННО ДЛЯ ТЕСТА ДЖЕКПОТА:
+        let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
+        let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
         
+        // (Эти две строки пока закомментируем, чтобы они не мешали)
+        // let char1 = getRandomCharacter();
+        // let char2 = getRandomCharacter();
+          
         // Чтобы не выпал один и тот же персонаж
         while (char1.name === char2.name) {
             char2 = getRandomCharacter();
