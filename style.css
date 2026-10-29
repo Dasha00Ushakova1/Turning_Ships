@@ -521,57 +521,77 @@ body {
    МОБИЛЬНАЯ ВЕРСИЯ (Адаптация под телефоны)
    ============================================================== */
 @media (max-width: 768px) {
-    /* Карточки встают в колонку */
+    /* Оставляем карточки в ряд и запрещаем им переноситься */
     .wheels {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 5px; /* Маленький отступ между карточками */
+        padding: 10px 5px;
     }
 
-    /* Плюсик между карточками поворачиваем горизонтально */
+    /* Плюсик оставляем между ними, просто делаем его чуть меньше */
     .pair-divider {
-        transform: rotate(90deg);
-        font-size: 36px;
-        margin: -5px 0;
+        transform: none;
+        font-size: 28px;
+        margin: 0;
     }
 
-    /* Уменьшаем карточки, чтобы влезли на экран */
+    /* Уменьшаем сами карточки, чтобы две влезли на экран телефона */
     .wheel {
-        max-width: 260px;
-    }
-    .pair-card {
-        height: 320px;
-    }
-
-    /* Текст на карточке и результат */
-    .result {
-        padding: 70px 16px 10px; /* Освобождаем место под кнопку истории */
-    }
-    .result__text {
-        font-size: 20px;
-    }
-
-    /* Кнопка запуска */
-    #spin-all {
-        padding: 14px 30px;
-        font-size: 16px;
-        width: 90%;
+        width: 45%; /* Каждая карточка занимает 45% ширины экрана */
+        max-width: 45%;
+        padding: 0;
     }
     
-    /* Кнопка истории на телефоне */
+    .pair-card {
+        height: 230px; /* Уменьшаем высоту, чтобы влезло по вертикали */
+    }
+
+    /* Уменьшаем шрифт имени, чтобы длинные имена влезали */
+    .pair-card__text {
+        font-size: 13px; 
+        padding: 10px 5px;
+    }
+    
+    /* Для персонажей без фото */
+    .pair-card img[style*="display: none"] + .pair-card__text {
+        font-size: 15px;
+    }
+
+    /* Блок с результатом сверху */
+    .result {
+        padding: 70px 16px 10px;
+    }
+    .result__text {
+        font-size: 16px;
+    }
+
+    /* КНОПКА ОСТАЕТСЯ БОЛЬШОЙ */
+    .actions {
+        padding: 15px 10px 30px;
+    }
+    #spin-all {
+        width: 90%;
+        max-width: 320px; /* Ограничиваем ширину, чтобы не вылезала */
+        font-size: 16px; /* Оставляем крупный шрифт */
+        padding: 14px 20px;
+        white-space: nowrap; /* Текст не переносится на новую строку */
+    }
+
+    /* Кнопка истории */
     .history-link {
         height: 38px;
         padding: 0 15px;
         font-size: 13px;
     }
 
-    /* Таблица истории - чтобы не вылезала за экран телефона */
-    .history-card {
-        padding: 10px;
+    /* Таблица истории */
+    .history-main {
+        padding: 16px 8px 32px;
     }
     .history-table thead th, 
     .history-table tbody td {
-        padding: 10px 12px;
-        font-size: 13px;
+        padding: 10px 8px;
+        font-size: 12px;
     }
 }
