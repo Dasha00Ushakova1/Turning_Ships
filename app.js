@@ -183,19 +183,18 @@ function initGenerator() {
     const card1 = document.getElementById('slot-1');
     const card2 = document.getElementById('slot-2');
 
-      spinBtn.addEventListener('click', () => {
-        // ВРЕМЕННО ДЛЯ ТЕСТА ДЖЕКПОТА:
+    spinBtn.addEventListener('click', () => {
+        
+        // ==========================================
+        // ВРЕМЕННЫЙ РЕЖИМ ДЛЯ ТЕСТА ДЖЕКПОТА
+        // ==========================================
         let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
         let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
         
-        // (Эти две строки пока закомментируем, чтобы они не мешали)
+        // (Когда закончите тест, замените две строчки выше на эти:)
         // let char1 = getRandomCharacter();
         // let char2 = getRandomCharacter();
-          
-        // Чтобы не выпал один и тот же персонаж
-        while (char1.name === char2.name) {
-            char2 = getRandomCharacter();
-        }
+        // ==========================================
 
         // Добавляем анимацию тряски
         card1.classList.add('shaking');
@@ -239,6 +238,15 @@ function initGenerator() {
                 resultLine.innerHTML = `<span class="result__text">${resultText}</span>`;
 
                 saveHistory(char1.name, char2.name, resultText);
+
+                // ПРОВЕРКА НА ДЖЕКПОТ
+                const isKishiar = (name) => name.includes("Кишиар");
+                const isYuder = (name) => name.includes("Юдер");
+
+                if ((isKishiar(char1.name) && isYuder(char2.name)) || 
+                    (isYuder(char1.name) && isKishiar(char2.name))) {
+                    triggerJackpot();
+                }
             }
         }, 50);
     });
