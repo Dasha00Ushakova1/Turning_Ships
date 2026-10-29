@@ -19,7 +19,7 @@ const CHARACTERS = [
     { name: "Канна Ванд", img: "kanna.jpg" },
     { name: "Кейлус Ла Орр", img: "keilus.jpg" },
     { name: "Кишиар Ла Орр", img: "kishiar.jpg" },
-    { name: "Киолле Да Диарка", img: "kiolle.jpg" }, // ДОБАВЛЕНО ФОТО
+    { name: "Киолле Да Диарка", img: "kiolle.jpg" },
     { name: "Лушан", img: "lushan.png" },
     { name: "Мик Шуден", img: "mick.png" },
     { name: "Нахан", img: "nahan.jpg" },
@@ -32,7 +32,7 @@ const CHARACTERS = [
     { name: "Юливер", img: "uliver.jpg" },
     { name: "Юдер Айл", img: "yuder.jpg" },
 
-    // === БЕЗ ФОТО ===
+    // === БЕЗ ФОТО (и новые фото) ===
     { name: "Инелла Ла Орр", img: null },
     { name: "Лафлаим Реходин Ла Орр", img: null },
     { name: "Девран Хартуд", img: "devran.jpg" },
@@ -219,7 +219,7 @@ function initGenerator() {
                 name1.textContent = char1.name;
                 name2.textContent = char2.name;
 
-                // Картинки (если есть)
+                // Картинки
                 if (char1.img) {
                     img1.src = `./images/${char1.img}`;
                     img1.style.display = 'block';
@@ -270,25 +270,11 @@ function saveHistory(c1, c2, result) {
     
     const toast = document.getElementById('toast');
     if (toast) {
+        toast.textContent = 'Пара сохранена в историю!';
         toast.className = 'toast toast--success';
         toast.hidden = false;
         setTimeout(() => toast.hidden = true, 2000);
     }
-}
-                // ... (выше идет saveHistory)
-                saveHistory(char1.name, char2.name, resultText);
-
-                // ПРОВЕРКА НА ДЖЕКПОТ
-                const isKishiar = (name) => name.includes("Кишиар");
-                const isYuder = (name) => name.includes("Юдер");
-
-                if ((isKishiar(char1.name) && isYuder(char2.name)) || 
-                    (isYuder(char1.name) && isKishiar(char2.name))) {
-                    triggerJackpot();
-                }
-            }
-        }, 50);
-    });
 }
 
 // Функция включения Джекпота
@@ -299,14 +285,17 @@ function triggerJackpot() {
     document.body.classList.add('body-flash');
     
     // 2. Показываем надпись
-    jackpotScreen.hidden = false;
+    if (jackpotScreen) {
+        jackpotScreen.hidden = false;
+    }
 
     // 3. Убираем всё через 3 секунды
     setTimeout(() => {
-        jackpotScreen.hidden = true;
+        if (jackpotScreen) jackpotScreen.hidden = true;
         document.body.classList.remove('body-flash');
     }, 3000);
 }
+
 function initHistory() {
     const tbody = document.getElementById('history-body');
     const emptyEl = document.getElementById('history-empty');
@@ -314,11 +303,11 @@ function initHistory() {
     let history = JSON.parse(localStorage.getItem('pairHistory') || '[]');
 
     if (history.length === 0) {
-        emptyEl.hidden = false;
+        if (emptyEl) emptyEl.hidden = false;
         return;
     }
 
-    emptyEl.hidden = true;
+    if (emptyEl) emptyEl.hidden = true;
 
     history.forEach(item => {
         const tr = document.createElement('tr');
@@ -328,7 +317,7 @@ function initHistory() {
             <td>${item.char2}</td>
             <td>${item.result}</td>
         `;
-        tbody.appendChild(tr);
+        if (tbody) tbody.appendChild(tr);
     });
 }
 
