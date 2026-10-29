@@ -2,10 +2,9 @@
 
 // ==========================================
 // ПОЛНЫЙ СПИСОК ПЕРСОНАЖЕЙ
-// Если есть картинка - пишем имя файла. Если нет - пишем null.
 // ==========================================
 const CHARACTERS = [
-    // === С ФОТО (25 человек) ===
+    // === С ФОТО ===
     { name: "Джино Борделли", img: "dzhino.jpg" },
     { name: "Эджейн Афнан Неларн", img: "edzheyn.png" },
     { name: "Эннел Каспирл", img: "ennel.png" },
@@ -20,6 +19,7 @@ const CHARACTERS = [
     { name: "Канна Ванд", img: "kanna.jpg" },
     { name: "Кейлус Ла Орр", img: "keilus.jpg" },
     { name: "Кишиар Ла Орр", img: "kishiar.jpg" },
+    { name: "Киолле Да Диарка", img: "kiolle.jpg" }, // ДОБАВЛЕНО ФОТО
     { name: "Лушан", img: "lushan.png" },
     { name: "Мик Шуден", img: "mick.png" },
     { name: "Нахан", img: "nahan.jpg" },
@@ -32,10 +32,10 @@ const CHARACTERS = [
     { name: "Юливер", img: "uliver.jpg" },
     { name: "Юдер Айл", img: "yuder.jpg" },
 
-    // === БЕЗ ФОТО (Все остальные из списка) ===
+    // === БЕЗ ФОТО ===
     { name: "Инелла Ла Орр", img: null },
     { name: "Лафлаим Реходин Ла Орр", img: null },
-    { name: "Девран Хартуд", img: null },
+    { name: "Девран Хартуд", img: "devran.jpg" },
     { name: "Пруэль Ван Тайн", img: null },
     { name: "Ниполлион Ван Тайн", img: null },
     { name: "Ревелин Шан Апето", img: null },
@@ -56,14 +56,13 @@ const CHARACTERS = [
     { name: "Робель", img: null },
     { name: "Марсуна", img: null },
     { name: "Онел", img: null },
-    { name: "Джимми Окер", img: null },
+    { name: "Джимми Окер", img: "jimmy.jpg" },
     { name: "Хуан Ларево", img: null },
     { name: "Фиени Моффл", img: null },
     { name: "Фэй", img: null },
     { name: "Изиас Келтар", img: null },
     { name: "Герцог Диарка", img: null },
     { name: "Лангреци Да Диарка", img: null },
-    { name: "Киолле Да Диарка", img: null },
     { name: "Киронн Да Диарка", img: null },
     { name: "Иделроф Да Диарка", img: null },
     { name: "Барон Дурманд", img: null },
@@ -80,8 +79,8 @@ const CHARACTERS = [
     { name: "Феодал Хартан", img: null },
     { name: "Сабеллина Хартан", img: null },
     { name: "Райол Хартан", img: null },
-    { name: "Закайл Хартан", img: null },
-    { name: "Зеклис Хартан", img: null },
+    { name: "Закайл Хартан", img: "zakail.jpg" },
+    { name: "Зеклис Хартан", img: "zachlis.jpg" },
     { name: "Дермилла", img: null },
     { name: "Эклен Вьюкан", img: null },
     { name: "Хенк", img: null },
@@ -108,7 +107,7 @@ const CHARACTERS = [
     { name: "Эрши", img: null },
     { name: "Джим", img: null },
     { name: "Питер", img: null },
-    { name: "Алик Фелгин", img: null },
+    { name: "Алик Фелгин", img: "alik.jpg" },
     { name: "Фраа Эстр", img: null },
     { name: "Уэлливен", img: null },
     { name: "Энк", img: null },
@@ -125,7 +124,7 @@ const CHARACTERS = [
     { name: "Джеральд Мукера", img: null },
     { name: "Мегна Курлиева", img: null },
     { name: "Галексентр Бальфорс", img: null },
-    { name: "Эмон", img: null },
+    { name: "Эмон", img: "emon.jpg" },
     { name: "Атон Джин", img: null },
     { name: "Свин", img: null },
     { name: "Онаквей", img: null },
@@ -159,7 +158,7 @@ const CHARACTERS = [
 ];
 
 // ==========================================
-// ЛОГИКА РАНДОМАЙЗЕРА
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 // ==========================================
 function getRandomCharacter() {
     return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
@@ -171,6 +170,9 @@ function formatTimestamp(date) {
            `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 }
 
+// ==========================================
+// ЛОГИКА ГЕНЕРАТОРА
+// ==========================================
 function initGenerator() {
     const spinBtn = document.getElementById('spin-all');
     const img1 = document.getElementById('img-1');
@@ -178,30 +180,42 @@ function initGenerator() {
     const img2 = document.getElementById('img-2');
     const name2 = document.getElementById('name-2');
     const resultLine = document.getElementById('result-line');
+    const card1 = document.getElementById('slot-1');
+    const card2 = document.getElementById('slot-2');
 
     spinBtn.addEventListener('click', () => {
         let char1 = getRandomCharacter();
         let char2 = getRandomCharacter();
         
-        // Защита от выпадения одного и того же дважды
+        // Чтобы не выпал один и тот же персонаж
         while (char1.name === char2.name) {
             char2 = getRandomCharacter();
         }
 
+        // Добавляем анимацию тряски
+        card1.classList.add('shaking');
+        card2.classList.add('shaking');
+
         let ticks = 0;
         const interval = setInterval(() => {
+            // Быстрое мелькание имен
             name1.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
             name2.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
+            
             ticks++;
             
             if (ticks >= 10) {
                 clearInterval(interval);
                 
+                // Убираем тряску
+                card1.classList.remove('shaking');
+                card2.classList.remove('shaking');
+                
+                // Финальный результат
                 name1.textContent = char1.name;
                 name2.textContent = char2.name;
 
-                // УМНАЯ ЛОГИКА ДЛЯ КАРТИНОК
-                // Если картинка есть — показываем. Если нет — скрываем тег img.
+                // Картинки (если есть)
                 if (char1.img) {
                     img1.src = `./images/${char1.img}`;
                     img1.style.display = 'block';
@@ -225,6 +239,9 @@ function initGenerator() {
     });
 }
 
+// ==========================================
+// ЛОГИКА ИСТОРИИ
+// ==========================================
 function saveHistory(c1, c2, result) {
     let history = JSON.parse(localStorage.getItem('pairHistory') || '[]');
     
@@ -271,35 +288,10 @@ function initHistory() {
         tbody.appendChild(tr);
     });
 }
-    spinBtn.addEventListener('click', () => {
-        let char1 = getRandomCharacter();
-        let char2 = getRandomCharacter();
-        
-        while (char1.name === char2.name) {
-            char2 = getRandomCharacter();
-        }
 
-        // Добавляем класс тряски
-        const card1 = document.getElementById('slot-1');
-        const card2 = document.getElementById('slot-2');
-        card1.classList.add('shaking');
-        card2.classList.add('shaking');
-
-        let ticks = 0;
-        const interval = setInterval(() => {
-            name1.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
-            name2.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
-            ticks++;
-            
-            if (ticks >= 10) {
-                clearInterval(interval);
-                
-                // Убираем класс тряски
-                card1.classList.remove('shaking');
-                card2.classList.remove('shaking');
-
-                // ... ДАЛЬШЕ ВАШ КОД ВЫВОДА ИМЕН И КАРТИНОК ...
-
+// ==========================================
+// ЗАПУСК
+// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     if (document.body.classList.contains('page--generator')) initGenerator();
     if (document.body.classList.contains('page--history')) initHistory();
