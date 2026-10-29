@@ -1,41 +1,453 @@
 /* ==============================================================
-   Карточки персонажей для Рандомайзера
+   1. ПЕРЕМЕННЫЕ И СБРОС
    ============================================================== */
+:root {
+    --color-bg: #0e0a12;
+    --color-text: #f4ecd8;
+    --color-text-muted: #b8a888;
+    --color-accent: #c9a86a;
+    --color-accent-dark: #8a6f3d;
+    --color-surface: rgba(20, 14, 26, 0.75);
+    --color-surface-solid: #1a1220;
+    --color-border: rgba(201, 168, 106, 0.35);
+
+    --font-main: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-fancy: "Georgia", "Times New Roman", serif;
+
+    --radius: 10px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+[hidden] { display: none !important; }
+
+html, body { min-height: 100%; }
+
+body {
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ==============================================================
+   2. ФОН
+   ============================================================== */
+.bg {
+    position: fixed;
+    inset: 0;
+    background-image: url('./IMG_20260926_155712_205.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.75) 100%);
+}
+
+/* ==============================================================
+   3. КНОПКА "ИСТОРИЯ" (в левом верхнем углу)
+   ============================================================== */
+.history-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    font-size: 20px;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s;
+}
+.history-link:hover { background: rgba(201, 168, 106, 0.15); }
+
+/* ==============================================================
+   4. РЕЗУЛЬТАТ (Верхняя строка)
+   ============================================================== */
+.result {
+    padding: 72px 16px 16px;
+    text-align: center;
+    z-index: 1;
+}
+.result__line {
+    display: inline-block;
+    padding: 14px 22px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+    max-width: 100%;
+}
+.result__placeholder {
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 14px;
+}
+.result__text {
+    font-family: var(--font-fancy);
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--color-accent);
+    animation: pop 0.35s ease;
+}
+
+@keyframes pop {
+    0%   { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+/* ==============================================================
+   5. РАНДОМАЙЗЕР: КАРТОЧКИ ПЕРСОНАЖЕЙ
+   ============================================================== */
+.wheels {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 16px;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.pair-divider {
+    font-family: var(--font-fancy);
+    font-size: 48px;
+    color: var(--color-accent);
+    text-shadow: 0 0 20px rgba(201, 168, 106, 0.5);
+    user-select: none;
+}
+
+.wheel {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px;
+}
+
 .pair-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 250px;
-    background: rgba(20, 14, 26, 0.6);
+    background: linear-gradient(135deg, rgba(26, 18, 32, 0.95), rgba(14, 10, 18, 0.95));
+    border: 2px solid var(--color-border);
     border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(201, 168, 106, 0.05);
+    height: 380px;
+    position: relative;
     overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Декоративная внутренняя рамка */
+.pair-card::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201, 168, 106, 0.2);
+    border-radius: calc(var(--radius) - 2px);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Анимация во время выбора */
+.pair-card.shaking {
+    animation: shake 0.1s infinite alternate;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 20px rgba(201, 168, 106, 0.4);
+}
+
+@keyframes shake {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+/* Фото */
 .pair-card img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
-    border-bottom: 1px solid var(--color-border);
-    border-radius: var(--radius) var(--radius) 0 0;
+    object-position: top;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.9;
+    background: radial-gradient(circle, #2a2033 0%, #110c17 100%);
 }
 
+/* Имя персонажа */
 .pair-card__text {
-    padding: 15px 10px;
-    font-family: var(--font-fancy);
-    font-size: 18px;
-    color: var(--color-accent);
-    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    padding: 20px 15px;
+    font-family: var(--font-fancy);
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(to top, rgba(10, 8, 14, 1) 0%, rgba(10, 8, 14, 0.8) 60%, transparent 100%);
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* Чтобы блоки стояли в ряд даже на телефоне, если экран узкий */
-@media (max-width: 600px) {
+/* Если картинки НЕТ (скрыта через JS) — текст по центру */
+.pair-card img[style*="display: none"] + .pair-card__text {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    padding: 20px;
+    font-size: 26px;
+    color: var(--color-accent);
+}
+
+/* ==============================================================
+   6. КНОПКИ
+   ============================================================== */
+.actions {
+    padding: 20px 16px 40px;
+    text-align: center;
+    z-index: 1;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius);
+    font: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: filter 0.15s, background 0.15s;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.btn:hover { filter: brightness(1.1); }
+
+.btn--primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+    color: #1a1220;
+    box-shadow: 0 4px 14px rgba(201, 168, 106, 0.35);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+}
+.btn--ghost:hover { background: rgba(255,255,255,0.06); }
+
+.btn--small { padding: 6px 12px; font-size: 13px; }
+
+/* Спец. анимация для кнопки "Сгенерировать" */
+#spin-all {
+    font-size: 18px;
+    padding: 16px 40px;
+    letter-spacing: 2px;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 10px rgba(201, 168, 106, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(201, 168, 106, 0.6); }
+    100% { box-shadow: 0 0 10px rgba(201, 168, 106, 0.3); }
+}
+
+/* ==============================================================
+   7. СТРАНИЦА ИСТОРИИ
+   ============================================================== */
+.history-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(14, 10, 18, 0.75);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.history-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    font-size: 20px;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+.history-back:hover { background: rgba(201, 168, 106, 0.15); }
+
+.history-title {
+    font-family: var(--font-fancy);
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--color-accent);
+}
+
+.history-main {
+    flex: 1;
+    padding: 20px 16px 40px;
+    z-index: 1;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.history-card {
+    background: rgba(20, 14, 26, 0.85);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), inset 0 0 50px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table thead th {
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    color: var(--color-accent);
+    padding: 15px;
+    border-bottom: 2px solid var(--color-border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.history-table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(201, 168, 106, 0.1);
+    font-size: 15px;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+.history-table tbody tr:hover td {
+    background: rgba(201, 168, 106, 0.05);
+}
+
+/* Выделение последнего столбца (Результат) */
+.history-table td:last-child {
+    font-family: var(--font-fancy);
+    color: var(--color-accent);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.history-empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: 32px 16px;
+}
+
+/* ==============================================================
+   8. TOAST (Уведомления)
+   ============================================================== */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    background: var(--color-surface-solid);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    box-shadow: var(--shadow);
+    z-index: 200;
+    font-size: 14px;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+    font-weight: 600;
+    animation: slide-up 0.3s ease;
+}
+
+@keyframes slide-up {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.toast--success {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    box-shadow: 0 0 0 1px rgba(201, 168, 106, 0.25), 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.toast--error {
+    border-color: #c76b6b;
+    color: #e8a0a0;
+}
+
+/* ==============================================================
+   9. МОБИЛЬНАЯ ВЕРСИЯ (Адаптивность)
+   ============================================================== */
+@media (max-width: 768px) {
     .wheels {
-        flex-direction: column !important;
+        flex-direction: column;
+        gap: 10px;
     }
-    .wheel {
-        max-width: 100% !important;
-        width: 100% !important;
+    .pair-divider {
+        transform: rotate(90deg);
+        font-size: 36px;
+        margin: -5px 0;
     }
+    .pair-card {
+        height: 320px;
+        max-width: 240px;
+        margin: 0 auto;
+    }
+    .pair-card__text {
+        font-size: 18px;
+    }
+    .pair-card img[style*="display: none"] + .pair-card__text {
+        font-size: 22px;
+    }
+    .result { padding-top: 60px; }
+    .result__text { font-size: 20px; }
+    .history-main { padding: 16px 8px 32px; }
+    .history-table thead th, .history-table tbody td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    .history-title { font-size: 18px; }
 }
