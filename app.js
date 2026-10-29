@@ -188,8 +188,9 @@ function initGenerator() {
         // ==========================================
         // ВРЕМЕННЫЙ РЕЖИМ ДЛЯ ТЕСТА ДЖЕКПОТА
         // ==========================================
-        let char1 = getRandomCharacter();
-        let char2 = getRandomCharacter();
+                // ВРЕМЕННО ДЛЯ ТЕСТА:
+        let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
+        let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
         
         // (Когда закончите тест, замените две строчки выше на эти:)
         // let char1 = getRandomCharacter();
