@@ -271,6 +271,34 @@ function initHistory() {
         tbody.appendChild(tr);
     });
 }
+    spinBtn.addEventListener('click', () => {
+        let char1 = getRandomCharacter();
+        let char2 = getRandomCharacter();
+        
+        while (char1.name === char2.name) {
+            char2 = getRandomCharacter();
+        }
+
+        // Добавляем класс тряски
+        const card1 = document.getElementById('slot-1');
+        const card2 = document.getElementById('slot-2');
+        card1.classList.add('shaking');
+        card2.classList.add('shaking');
+
+        let ticks = 0;
+        const interval = setInterval(() => {
+            name1.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
+            name2.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
+            ticks++;
+            
+            if (ticks >= 10) {
+                clearInterval(interval);
+                
+                // Убираем класс тряски
+                card1.classList.remove('shaking');
+                card2.classList.remove('shaking');
+
+                // ... ДАЛЬШЕ ВАШ КОД ВЫВОДА ИМЕН И КАРТИНОК ...
 
 document.addEventListener('DOMContentLoaded', () => {
     if (document.body.classList.contains('page--generator')) initGenerator();
