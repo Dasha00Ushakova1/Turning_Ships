@@ -1,3 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning — Рандомайзер пар</title>
+    <link rel="icon" href="./unnamed.png" type="image/jpeg">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="page page--generator">
+
+    <div class="bg"></div>
+
+    <!-- Кнопка истории -->
+    <a href="history.html" class="history-link" aria-label="История">(=•́ܫ•̀=)</a>
+
+    <!-- Результат -->
+    <header class="result">
+        <div class="result__line" id="result-line">
+            <span class="result__placeholder">Нажмите «Зашипперить», чтобы начать </span>
+        </div>
+    </header>
+
+    <!-- Игровое поле -->
     <main class="wheels">
         <!-- Карточка 1 -->
         <section class="wheel">
@@ -18,3 +42,14 @@
             </div>
         </section>
     </main>
+
+    <!-- Кнопки -->
+    <footer class="actions">
+        <button id="spin-all" class="btn btn--primary" type="button">Начать шипп (⁄ ⁄•⁄ω⁄•⁄ ⁄)</button>
+    </footer>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
