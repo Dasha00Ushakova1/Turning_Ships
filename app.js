@@ -184,8 +184,9 @@ function initGenerator() {
     const card2 = document.getElementById('slot-2');
 
     spinBtn.addEventListener('click', () => {
-        let char1 = getRandomCharacter();
-        let char2 = getRandomCharacter();
+        // ВРЕМЕННО ДЛЯ ТЕСТА: принудительный выбор
+let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
+let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
         
         // Чтобы не выпал один и тот же персонаж
         while (char1.name === char2.name) {
