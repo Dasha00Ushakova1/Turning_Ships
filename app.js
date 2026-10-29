@@ -188,8 +188,8 @@ function initGenerator() {
         // ==========================================
         // ВРЕМЕННЫЙ РЕЖИМ ДЛЯ ТЕСТА ДЖЕКПОТА
         // ==========================================
-        let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
-        let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
+        let char1 = getRandomCharacter();
+        let char2 = getRandomCharacter();
         
         // (Когда закончите тест, замените две строчки выше на эти:)
         // let char1 = getRandomCharacter();
@@ -247,11 +247,10 @@ function initGenerator() {
                     (isYuder(char1.name) && isKishiar(char2.name))) {
                     triggerJackpot();
                 }
-            
+            }
         }, 50);
     });
 }
-
 // ==========================================
 // ЛОГИКА ИСТОРИИ
 // ==========================================
