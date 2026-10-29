@@ -247,7 +247,7 @@ function initGenerator() {
                     (isYuder(char1.name) && isKishiar(char2.name))) {
                     triggerJackpot();
                 }
-            }
+            
         }, 50);
     });
 }
