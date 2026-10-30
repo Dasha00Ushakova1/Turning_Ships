@@ -368,16 +368,8 @@ function initAllCharacters() {
 // ЗАПУСК
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('page--generator')) initGenerator();
-    if (document.body.classList.contains('page--history')) initHistory();
-    
-    // Проверяем, есть ли на странице контейнер для галереи
+    // Проверяем наличие элементов на странице и запускаем нужную логику
+    if (document.getElementById('spin-all')) initGenerator();
+    if (document.getElementById('history-body')) initHistory();
     if (document.getElementById('all-characters')) initAllCharacters();
-});
-// ==========================================
-// ЗАПУСК
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('page--generator')) initGenerator();
-    if (document.body.classList.contains('page--history')) initHistory();
 });
