@@ -337,7 +337,43 @@ function initHistory() {
         container.appendChild(card);
     });
 }
+// ==========================================
+// ЛОГИКА ГАЛЕРЕИ ПЕРСОНАЖЕЙ
+// ==========================================
+function initAllCharacters() {
+    const container = document.getElementById('all-characters');
+    if (!container) return;
 
+    // Сортируем персонажей по алфавиту для удобства
+    const sortedChars = [...CHARACTERS].sort((a, b) => a.name.localeCompare(b.name));
+
+    sortedChars.forEach(char => {
+        const card = document.createElement('div');
+        card.className = 'char-card';
+
+        const imgHtml = char.img 
+            ? `<img src="./images/${char.img}" class="history-img" alt="${char.name}">` 
+            : `<div class="history-img-placeholder">?</div>`;
+
+        card.innerHTML = `
+            ${imgHtml}
+            <span class="char-name">${char.name}</span>
+        `;
+        
+        container.appendChild(card);
+    });
+}
+
+// ==========================================
+// ЗАПУСК
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.body.classList.contains('page--generator')) initGenerator();
+    if (document.body.classList.contains('page--history')) initHistory();
+    
+    // Проверяем, есть ли на странице контейнер для галереи
+    if (document.getElementById('all-characters')) initAllCharacters();
+});
 // ==========================================
 // ЗАПУСК
 // ==========================================
