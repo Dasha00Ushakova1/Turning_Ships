@@ -61,7 +61,7 @@ const CHARACTERS = [
     { name: "Фиени Моффл", img: null },
     { name: "Фэй", img: null },
     { name: "Изиас Келтар", img: null },
-    { name: "Герцог Диарка", img: null },
+    { name: "Герцог Диарка", img: " IMG_20261030_212455_821.jpg" },
     { name: "Лангреци Да Диарка", img: null },
     { name: "Киронн Да Диарка", img: null },
     { name: "Иделроф Да Диарка", img: null },
