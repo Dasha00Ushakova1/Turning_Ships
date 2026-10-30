@@ -238,7 +238,7 @@ function initGenerator() {
                 const resultText = `${char1.name} + ${char2.name}`;
                 resultLine.innerHTML = `<span class="result__text">${resultText}</span>`;
 
-                saveHistory(char1.name, char2.name, resultText);
+                saveHistory(char1, char2, resultText);
 
                 // ПРОВЕРКА НА ДЖЕКПОТ
                 const isKishiar = (name) => name.includes("Кишиар");
