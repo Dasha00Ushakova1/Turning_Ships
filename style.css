@@ -402,10 +402,7 @@ body {
     top: 0;
     z-index: 5;
 }
-.history-link--right {
-    left: auto !important;
-    right: 12px;
-}
+
 
 .history-back {
     display: inline-flex;
@@ -726,11 +723,59 @@ body {
     }
 
     /* Кнопка истории */
-    .history-link {
+ /* ==============================================================
+   ВЕРХНЯЯ НАВИГАЦИЯ
+   ============================================================== */
+.top-nav {
+    position: fixed;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Одна кнопка слева, другая справа */
+    padding: 0 16px;
+    z-index: 10;
+    pointer-events: none; /* Пропускаем клики сквозь пустое место */
+    box-sizing: border-box;
+}
+
+.nav-btn {
+    pointer-events: auto; /* Возвращаем кликабельность самим кнопкам */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 22px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    font-size: 15px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.nav-btn:hover { 
+    background: rgba(201, 168, 106, 0.15); 
+    transform: scale(1.05);
+}
+
+/* На мобильных кнопки чуть меньше */
+@media (max-width: 768px) {
+    .nav-btn {
         height: 38px;
         padding: 0 15px;
         font-size: 13px;
     }
+    .top-nav {
+        top: 10px;
+        padding: 0 10px;
+    }
+}
 
     /* Таблица истории */
     .history-main {
