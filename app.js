@@ -41,7 +41,7 @@ const CHARACTERS = [
     { name: "Гейл", img: null },
     { name: "Дойл", img: null },
     { name: "Довер", img: null },
-    { name: "Марин", img: null },
+    { name: "Марин", img: "Марин.jpg" },
     { name: "Глое", img: null },
     { name: "Элпкинс", img: "Синее перышко.jpg" },
     { name: "Ренев", img: null },
