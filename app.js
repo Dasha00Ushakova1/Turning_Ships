@@ -183,27 +183,31 @@ function initGenerator() {
     const card1 = document.getElementById('slot-1');
     const card2 = document.getElementById('slot-2');
 
+    let isSpinning = false; // Флаг: идет ли сейчас генерация
+
     spinBtn.addEventListener('click', () => {
+        // Если анимация уже идет — ничего не делаем
+        if (isSpinning) return;
         
+        isSpinning = true;
+        spinBtn.disabled = true; // Визуально блокируем кнопку
+
         // ==========================================
         // ВРЕМЕННЫЙ РЕЖИМ ДЛЯ ТЕСТА ДЖЕКПОТА
         // ==========================================
-                // ВРЕМЕННО ДЛЯ ТЕСТА:
-                let char1 = getRandomCharacter();
-        let char2 = getRandomCharacter();
+        let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
+        let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
         
         // (Когда закончите тест, замените две строчки выше на эти:)
         // let char1 = getRandomCharacter();
         // let char2 = getRandomCharacter();
         // ==========================================
 
-        // Добавляем анимацию тряски
         card1.classList.add('shaking');
         card2.classList.add('shaking');
 
         let ticks = 0;
         const interval = setInterval(() => {
-            // Быстрое мелькание имен
             name1.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
             name2.textContent = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)].name;
             
@@ -212,15 +216,12 @@ function initGenerator() {
             if (ticks >= 10) {
                 clearInterval(interval);
                 
-                // Убираем тряску
                 card1.classList.remove('shaking');
                 card2.classList.remove('shaking');
                 
-                // Финальный результат
                 name1.textContent = char1.name;
                 name2.textContent = char2.name;
 
-                // Картинки
                 if (char1.img) {
                     img1.src = `./images/${char1.img}`;
                     img1.style.display = 'block';
@@ -246,7 +247,12 @@ function initGenerator() {
 
                 if ((isKishiar(char1.name) && isYuder(char2.name)) || 
                     (isYuder(char1.name) && isKishiar(char2.name))) {
-                    triggerJackpot();
+                    // Запускаем джекпот и передаем кнопку, чтобы разблокировать её только через 3 секунды
+                    triggerJackpot(spinBtn, () => { isSpinning = false; });
+                } else {
+                    // Если джекпота нет — разблокируем кнопку сразу
+                    isSpinning = false;
+                    spinBtn.disabled = false;
                 }
             }
         }, 50);
@@ -280,7 +286,8 @@ function saveHistory(c1, c2, result) {
 }
 
 // Функция включения Джекпота
-function triggerJackpot() {
+// Функция включения Джекпота
+function triggerJackpot(spinBtn, onComplete) {
     const jackpotScreen = document.getElementById('jackpot-screen');
     
     // 1. Включаем мигание фона
@@ -291,10 +298,14 @@ function triggerJackpot() {
         jackpotScreen.hidden = false;
     }
 
-    // 3. Убираем всё через 3 секунды
+    // 3. Убираем всё через 3 секунды и разблокируем кнопку
     setTimeout(() => {
         if (jackpotScreen) jackpotScreen.hidden = true;
         document.body.classList.remove('body-flash');
+        
+        // Возвращаем кнопке работоспособность
+        spinBtn.disabled = false;
+        if (onComplete) onComplete(); // Сбрасываем флаг isSpinning
     }, 3000);
 }
 
