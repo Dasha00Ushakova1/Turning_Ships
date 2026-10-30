@@ -578,8 +578,8 @@ body {
     .pair-card img[style*="display: none"] + .pair-card__text {
         font-size: 15px;
     }
-    .result {
-        padding: 70px 16px 10px;
+        .result {
+        padding: 110px 16px 15px; 
     }
     .result__text {
         font-size: 16px;
