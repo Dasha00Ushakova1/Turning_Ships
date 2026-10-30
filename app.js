@@ -260,8 +260,10 @@ function saveHistory(c1, c2, result) {
     
     const entry = {
         time: formatTimestamp(new Date()),
-        char1: c1,
-        char2: c2,
+        char1: c1.name,
+        char2: c2.name,
+        img1: c1.img || null,
+        img2: c2.img || null,
         result: result
     };
     
@@ -297,7 +299,7 @@ function triggerJackpot() {
 }
 
 function initHistory() {
-    const tbody = document.getElementById('history-body');
+    const container = document.getElementById('history-body');
     const emptyEl = document.getElementById('history-empty');
     
     let history = JSON.parse(localStorage.getItem('pairHistory') || '[]');
@@ -308,16 +310,37 @@ function initHistory() {
     }
 
     if (emptyEl) emptyEl.hidden = true;
+    container.innerHTML = ''; // Очищаем перед заполнением
 
     history.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${item.time}</td>
-            <td>${item.char1}</td>
-            <td>${item.char2}</td>
-            <td>${item.result}</td>
+        const card = document.createElement('div');
+        card.className = 'history-item';
+
+        // Проверяем, есть ли фото. Если нет - ставим красивую заглушку
+        const img1Html = item.img1 
+            ? `<img src="./images/${item.img1}" class="history-img" alt="${item.char1}">` 
+            : `<div class="history-img-placeholder">?</div>`;
+            
+        const img2Html = item.img2 
+            ? `<img src="./images/${item.img2}" class="history-img" alt="${item.char2}">` 
+            : `<div class="history-img-placeholder">?</div>`;
+
+        card.innerHTML = `
+            <div class="history-date">${item.time}</div>
+            <div class="history-content">
+                <div class="history-char">
+                    ${img1Html}
+                    <span>${item.char1}</span>
+                </div>
+                <div class="history-plus">+</div>
+                <div class="history-char">
+                    ${img2Html}
+                    <span>${item.char2}</span>
+                </div>
+            </div>
+            <div class="history-result">${item.result}</div>
         `;
-        if (tbody) tbody.appendChild(tr);
+        container.appendChild(card);
     });
 }
 
