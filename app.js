@@ -13,7 +13,7 @@ const CHARACTERS = [
     { name: "Финн Элдер", img: "finn.jpg" },
     { name: "Гакейн Болунвалд", img: "gakein.jpg" },
     { name: "Хебрейн Рейфланг", img: "hebreyn.png" },
-    { name: "Хеллен Каспирл", img: "IMG_20261030_231352_420.jpg" },
+    { name: "Хеллен Каспирл", img: "Хеллем.jpg" },
     { name: "Хинн Элдер", img: "hinn.jpg" },
     { name: "Качиан Ла Орр", img: "kachian.jpg" },
     { name: "Канна Ванд", img: "kanna.jpg" },
