@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" href="./1000109366 (2)-photoaidcom-cropped.jpg" type="image/jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turning — История</title>
-    <link rel="icon" href="./unnamed.png" type="image/jpeg">
+    <link rel="icon" href="./1000109366 (2)-photoaidcom-cropped.jpg" type="image/jpeg">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body class="page page--history">
@@ -14,27 +13,16 @@
 
     <header class="history-header">
         <a href="index.html" class="history-back" aria-label="Назад">←</a>
-        <h1 class="history-title">История генераций</h1>
+        <h1 class="history-title">История пар</h1>
     </header>
 
     <main class="history-main">
-        <div class="history-card">
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Дата и время</th>
-                        <th>Персонаж 1</th>
-                        <th>Персонаж 2</th>
-                        <th>Результат</th>
-                    </tr>
-                </thead>
-                <tbody id="history-body"></tbody>
-            </table>
+        <!-- Контейнер для карточек (заменяет таблицу) -->
+        <div id="history-body" class="history-grid"></div>
 
-            <p id="history-empty" class="history-empty" hidden>
-                Пока ничего не сгенерировано.
-            </p>
-        </div>
+        <p id="history-empty" class="history-empty" hidden>
+            Пока ничего не сгенерировано. <br> Самое время запустить рандомайзер!
+        </p>
     </main>
 
     <div id="toast" class="toast" hidden></div>
