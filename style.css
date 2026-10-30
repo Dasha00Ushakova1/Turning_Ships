@@ -402,6 +402,10 @@ body {
     top: 0;
     z-index: 5;
 }
+.history-link--right {
+    left: auto !important;
+    right: 12px;
+}
 
 .history-back {
     display: inline-flex;
