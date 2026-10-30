@@ -156,7 +156,6 @@ const CHARACTERS = [
     { name: "Петти", img: null },
     { name: "Ингелит", img: null }
 ];
-
 // ==========================================
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 // ==========================================
@@ -183,25 +182,22 @@ function initGenerator() {
     const card1 = document.getElementById('slot-1');
     const card2 = document.getElementById('slot-2');
 
-    let isSpinning = false; // Флаг: идет ли сейчас генерация
+    let isSpinning = false;
 
     spinBtn.addEventListener('click', () => {
-        // Если анимация уже идет — ничего не делаем
         if (isSpinning) return;
         
         isSpinning = true;
-        spinBtn.disabled = true; // Визуально блокируем кнопку
+        spinBtn.disabled = true;
 
-        // ==========================================
-        // ВРЕМЕННЫЙ РЕЖИМ ДЛЯ ТЕСТА ДЖЕКПОТА
-        // ==========================================
-        let char1 = CHARACTERS.find(c => c.name === "Кишиар Ла Орр");
-        let char2 = CHARACTERS.find(c => c.name === "Юдер Айл");
+        // Обычный случайный выбор (ТЕСТ ОТКЛЮЧЕН)
+        let char1 = getRandomCharacter();
+        let char2 = getRandomCharacter();
         
-        // (Когда закончите тест, замените две строчки выше на эти:)
-        // let char1 = getRandomCharacter();
-        // let char2 = getRandomCharacter();
-        // ==========================================
+        // Защита от выпадения одного и того же дважды
+        while (char1.name === char2.name) {
+            char2 = getRandomCharacter();
+        }
 
         card1.classList.add('shaking');
         card2.classList.add('shaking');
@@ -247,10 +243,8 @@ function initGenerator() {
 
                 if ((isKishiar(char1.name) && isYuder(char2.name)) || 
                     (isYuder(char1.name) && isKishiar(char2.name))) {
-                    // Запускаем джекпот и передаем кнопку, чтобы разблокировать её только через 3 секунды
                     triggerJackpot(spinBtn, () => { isSpinning = false; });
                 } else {
-                    // Если джекпота нет — разблокируем кнопку сразу
                     isSpinning = false;
                     spinBtn.disabled = false;
                 }
@@ -258,6 +252,7 @@ function initGenerator() {
         }, 50);
     });
 }
+
 // ==========================================
 // ЛОГИКА ИСТОРИИ
 // ==========================================
@@ -285,27 +280,18 @@ function saveHistory(c1, c2, result) {
     }
 }
 
-// Функция включения Джекпота
-// Функция включения Джекпота
 function triggerJackpot(spinBtn, onComplete) {
     const jackpotScreen = document.getElementById('jackpot-screen');
     
-    // 1. Включаем мигание фона
     document.body.classList.add('body-flash');
-    
-    // 2. Показываем надпись
-    if (jackpotScreen) {
-        jackpotScreen.hidden = false;
-    }
+    if (jackpotScreen) jackpotScreen.hidden = false;
 
-    // 3. Убираем всё через 3 секунды и разблокируем кнопку
     setTimeout(() => {
         if (jackpotScreen) jackpotScreen.hidden = true;
         document.body.classList.remove('body-flash');
         
-        // Возвращаем кнопке работоспособность
         spinBtn.disabled = false;
-        if (onComplete) onComplete(); // Сбрасываем флаг isSpinning
+        if (onComplete) onComplete();
     }, 3000);
 }
 
@@ -321,13 +307,12 @@ function initHistory() {
     }
 
     if (emptyEl) emptyEl.hidden = true;
-    container.innerHTML = ''; // Очищаем перед заполнением
+    container.innerHTML = '';
 
     history.forEach(item => {
         const card = document.createElement('div');
         card.className = 'history-item';
 
-        // Проверяем, есть ли фото. Если нет - ставим красивую заглушку
         const img1Html = item.img1 
             ? `<img src="./images/${item.img1}" class="history-img" alt="${item.char1}">` 
             : `<div class="history-img-placeholder">?</div>`;
