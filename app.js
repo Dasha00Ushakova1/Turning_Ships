@@ -156,6 +156,9 @@ const CHARACTERS = [
     { name: "Петти", img: null },
     { name: "Ингелит", img: null }
 ];
+
+// Удаляем старую историю (сработает один раз у каждого пользователя)
+localStorage.removeItem('pairHistory'); 
 // ==========================================
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 // ==========================================
@@ -269,7 +272,7 @@ function saveHistory(c1, c2, result) {
     };
     
     history.unshift(entry);
-    localStorage.setItem('pairHistory', JSON.stringify(history));
+    localStorage.getItem('pairHistory_v2')
     
     const toast = document.getElementById('toast');
     if (toast) {
@@ -299,7 +302,7 @@ function initHistory() {
     const container = document.getElementById('history-body');
     const emptyEl = document.getElementById('history-empty');
     
-    let history = JSON.parse(localStorage.getItem('pairHistory') || '[]');
+    JSON.parse(localStorage.getItem('pairHistory_v2') || '[]');
 
     if (history.length === 0) {
         if (emptyEl) emptyEl.hidden = false;
