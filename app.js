@@ -139,6 +139,7 @@ const CHARACTERS = [
     { name: "Сера", img: null },
     { name: "Михаэль Пант", img: null },
     { name: "Лорна Бейт", img: null },
+    { name: "Граф Галлон", img: "IMG_20261101_000238_369.jpg" },
     { name: "Лума", img: "IMG_20261030_223407_315.jpg" },
     { name: "Блейк ван Тайн", img: null },
     { name: "Первый император", img: "IMG_20261030_223357_146.jpg" },
